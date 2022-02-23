@@ -1,0 +1,10 @@
+<ng-container *ngIf="(store.categories$ | async) as categories">
+    <app-item-list (deleteItemClick)="deleteItem($event)"
+                   (editItemClick)="editItem($event, categories)"
+                   *ngIf="(store.state$ | async) as state"
+                   [items]="state.items"
+                   class="items"></app-item-list>
+    <button (click)="addItem(categories)" aria-label="Add Item" class="add-item" color="primary" mat-fab>
+        <mat-icon>add</mat-icon>
+    </button>
+</ng-container>

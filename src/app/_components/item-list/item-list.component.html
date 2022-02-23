@@ -1,0 +1,49 @@
+<mat-form-field appearance="standard" class="filter">
+    <mat-label>Filter</mat-label>
+    <input
+        #filter
+        (keyup)="applyFilter(filter.value)"
+        matInput
+        placeholder="Kategorie, Beschreibung oder Name des Items">
+</mat-form-field>
+<table [dataSource]="dataSource" class="items" mat-table>
+    <ng-container matColumnDef="select">
+        <th *matHeaderCellDef mat-header-cell>
+            <mat-checkbox (change)="$event ? toggleSelectAll() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+        </th>
+        <td *matCellDef="let row" mat-cell>
+            <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                          (click)="$event.stopPropagation()"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+        </td>
+    </ng-container>
+
+    <mat-text-column name="name"></mat-text-column>
+    <mat-text-column name="description"></mat-text-column>
+    <mat-text-column name="category"></mat-text-column>
+    <mat-text-column name="weight"></mat-text-column>
+    <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell></th>
+        <td *matCellDef="let item" mat-cell>
+            <button (click)="onEditItemClick($event, item)" *ngIf="editItemClick.observed" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="onDeleteItemClick($event, item)" *ngIf="deleteItemClick.observed" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="columns; sticky: true" mat-header-row></tr>
+    <tr (click)="onRowClick(item)" *matRowDef="let item; columns: columns" mat-row></tr>
+    <tr *matNoDataRow class="mat-row">
+        <td
+            [attr.colspan]="columns.length"
+            class="mat-cell">No data matching the filter "{{filter.value}}"
+        </td>
+    </tr>
+</table>

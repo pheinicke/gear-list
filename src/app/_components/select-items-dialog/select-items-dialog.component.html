@@ -1,0 +1,9 @@
+<h2>Items wählen</h2>
+<app-item-list (selectionChanged)="onSelectionChanged($event)" [items]="items" [selectable]="true"></app-item-list>
+<button
+    [disabled]="selectedItems.length === 0"
+    [mat-dialog-close]="selectedItems"
+    color="primary"
+    mat-raised-button>Speichern
+</button>
+<button [mat-dialog-close]="[]" mat-button>Abbrechen</button>

@@ -1,0 +1,18 @@
+:host {
+    display: block;
+}
+
+.lists {
+    width: 100%;
+}
+
+.add-list {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}
+
+:host ::ng-deep tr.mat-row:hover {
+    background-color: grey;
+    cursor: pointer;
+}

@@ -1,0 +1,24 @@
+@use '../../node_modules/@angular/material/theming';
+
+$config: theming.mat-typography-config(
+    $font-family: '"Open Sans", Helvetica, Arial, sans-serif',
+    $display-4: theming.mat-typography-level(95px, 142px, 400),
+    $display-3: theming.mat-typography-level(59px, 89px, 400),
+    $display-2: theming.mat-typography-level(48px, 73px, 400),
+    $display-1: theming.mat-typography-level(34px, 53px, 600),
+    $headline: theming.mat-typography-level(24px, 38px, 600),
+    $title: theming.mat-typography-level(20px, 32px, 600),
+    $subheading-2: theming.mat-typography-level(16px, 26px, 600),
+    $subheading-1: theming.mat-typography-level(14px, 23px, 400),
+    $body-2: theming.mat-typography-level(16px, 26px, 400),
+    $body-1: theming.mat-typography-level(14px, 23px, 400),
+    $caption: theming.mat-typography-level(12px, 20px, 400),
+    $button: theming.mat-typography-level(14px, 23px, 600),
+    $input: theming.mat-typography-level(16px, 1.625, 400)
+);
+
+// See for available levels:
+// https://github.com/angular/components/blob/master/guides/typography.md
+@mixin use($level) {
+    @include theming.mat-typography-level-to-styles($config, $level);
+}

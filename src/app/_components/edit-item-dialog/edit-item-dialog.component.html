@@ -1,0 +1,30 @@
+<mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input #nameField [value]="name" matInput placeholder="Name">
+</mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label>Beschreibung</mat-label>
+    <textarea #descField [value]="description" matInput placeholder="Beschreibung"></textarea>
+</mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label>Kategorie</mat-label>
+    <input #catField (keyup)="applyCategoriesFilter(catField.value)" [matAutocomplete]="auto" [value]="category"
+           matInput
+           placeholder="Kategorie">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let category of filteredCategories$ | async" [value]="category">
+            {{ category }}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label>Gewicht</mat-label>
+    <input #weightField [valueAsNumber]="weight" matInput min="0" placeholder="Gewicht" type="number">
+</mat-form-field>
+<button
+    [disabled]="!nameField.value"
+    [mat-dialog-close]="{id, name: nameField.value, description: descField.value, category: catField.value, weight: weightField.value}"
+    color="primary"
+    mat-raised-button>Speichern
+</button>
+<button [mat-dialog-close]="null" mat-button>Abbrechen</button>

@@ -1,0 +1,15 @@
+<mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input #nameField [value]="name" matInput placeholder="Name">
+</mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label>Beschreibung</mat-label>
+    <textarea #descField [value]="description" matInput placeholder="Beschreibung"></textarea>
+</mat-form-field>
+<button
+    [disabled]="!nameField.value"
+    [mat-dialog-close]="{id, name: nameField.value, description: descField.value, items}"
+    color="primary"
+    mat-raised-button>Speichern
+</button>
+<button [mat-dialog-close]="null" mat-button>Abbrechen</button>

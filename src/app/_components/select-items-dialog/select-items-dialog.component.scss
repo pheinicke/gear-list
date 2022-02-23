@@ -1,0 +1,16 @@
+:host {
+    display: block;
+}
+
+:host ::ng-deep table {
+    display: block;
+    width: 100%;
+    max-height: 60vh;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    overflow: scroll;
+}
+
+:host ::ng-deep td, :host ::ng-deep th {
+    padding: 0 16px;
+}

@@ -1,0 +1,16 @@
+:host {
+    display: block;
+}
+
+.items {
+    width: 100%;
+}
+
+.filter {
+    width: 100%;
+}
+
+:host ::ng-deep tr.mat-row:hover {
+    background-color: grey;
+    cursor: pointer;
+}

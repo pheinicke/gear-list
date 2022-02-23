@@ -1,0 +1,15 @@
+<ng-container *ngIf="(list$ | async) as list">
+    <mat-toolbar color="primary"><span>{{ list.name }}</span></mat-toolbar>
+    <app-item-list (deleteItemClick)="removeItemFromList(list, $event)"
+                   *ngIf="(listItems$ | async) as listItems"
+                   [items]="listItems"
+                   class="items"></app-item-list>
+
+    <button (click)="showAddItemDialog(list, itemSuggestions)"
+            *ngIf="(itemSuggestions$ | async) as itemSuggestions"
+            class="add-item"
+            color="primary"
+            mat-fab>
+        <mat-icon>add</mat-icon>
+    </button>
+</ng-container>

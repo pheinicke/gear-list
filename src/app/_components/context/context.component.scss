@@ -1,0 +1,16 @@
+:host {
+    display: block;
+    height: 100%;
+
+    & ::ng-deep .mat-sidenav-container {
+        height: 100%;
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.sidenav {
+    min-width: 160px;
+}
