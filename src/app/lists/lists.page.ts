@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { EditListDialogComponent } from '../_components/edit-list-dialog/edit-list-dialog.component';
 import { ConfirmDialogComponent } from '../_components/confirm-dialog/confirm-dialog.component';
 import { ItemsStore } from '../items/_services/items.store';
+import { totalWeight } from '../items/_types/item';
 
 import { ListsStore } from './_services/lists.store';
 import { List } from './_types/list';
@@ -54,12 +55,8 @@ export class ListsPage {
             });
     }
 
-    totalWeight(list: List): string {
-        const weight = list.items.reduce((acc, curr) => {
-            const itemWeight = this.itemsStore.state.items.find((item) => item.id === curr)?.weight || '0';
-            return Number.parseInt(itemWeight) + acc;
-        }, 0);
-
+    weight(list: List): string {
+        const weight = totalWeight(this.itemsStore.state.items.filter((item) => list.items.includes(item.id)));
         return weight.toLocaleString() + 'g';
     }
 

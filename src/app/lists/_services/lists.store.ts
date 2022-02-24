@@ -9,6 +9,7 @@ import { AddItemsToList, AddList, DeleteList, EditList, LoadLists, RemoveItemFro
 import { List } from '../_types/list';
 import { uuidv4 } from '../../_utils/uuidv4';
 import { Item } from '../../items/_types/item';
+import { mapNotNull } from '../../_utils/operators';
 
 import { ListsService } from './lists.service';
 
@@ -38,6 +39,10 @@ export class ListsStore extends Store<ListsStoreState> {
 
     removeItemFromList(list: List, item: Item): void {
         this.dispatch(new RemoveItemFromList(list, item));
+    }
+
+    list(listId: string): Observable<List> {
+        return this.state$.pipe(mapNotNull((state) => state.lists.find((list) => list.id === listId)));
     }
 
     protected handleAction(action: Action): Observable<StateUpdate<ListsStoreState>> {

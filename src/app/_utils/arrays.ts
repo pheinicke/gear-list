@@ -29,3 +29,17 @@ export function sortStringArray(arr: Array<string>, order = SortOrder.ASCENDING)
             : (first, second) => compare(second, first);
     return [...arr].sort(compareFn);
 }
+
+export function groupBy<T, K>(arr: Array<T>, keyMapper: (T) => K): Map<K, Array<T>> {
+    const map = new Map<K, Array<T>>();
+    arr.forEach((item) => {
+        const key = keyMapper(item);
+        const values = map.get(key);
+        if (!values) {
+            map.set(key, [item]);
+        } else {
+            values.push(item);
+        }
+    });
+    return map;
+}

@@ -1,9 +1,15 @@
 <ng-container *ngIf="(list$ | async) as list">
     <mat-toolbar color="primary"><span>{{ list.name }}</span></mat-toolbar>
-    <app-item-list (deleteItemClick)="removeItemFromList(list, $event)"
-                   *ngIf="(listItems$ | async) as listItems"
-                   [items]="listItems"
-                   class="items"></app-item-list>
+    <mat-accordion *ngIf="(listItems$ | async) as listItems" multi>
+        <mat-expansion-panel *ngFor="let section of listItems">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ section.category || 'Sonstiges' }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <app-item-list (deleteItemClick)="removeItemFromList(list, $event)"
+                           [items]="section.items"
+                           class="items"></app-item-list>
+        </mat-expansion-panel>
+    </mat-accordion>
 
     <button (click)="showAddItemDialog(list, itemSuggestions)"
             *ngIf="(itemSuggestions$ | async) as itemSuggestions"

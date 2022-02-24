@@ -27,12 +27,16 @@ export class ItemsStore extends Store<ItemsStoreState> {
         );
 
         this.categories$ = this.items$.pipe(
-            map((items) => items.map((item) => item.category?.trim() || '').filter((category) => !!category)),
-            map((categories) => sortStringArray([...new Set(categories)])),
+            map((items) => ItemsStore.categories(items)),
             distinctUntilStringArrayChanged()
         );
 
         this.dispatch(new LoadItems());
+    }
+
+    static categories(items: Array<Item>): Array<string> {
+        const categories = items.map((item) => item.category?.trim() || '').filter((category) => !!category);
+        return sortStringArray([...new Set(categories)]);
     }
 
     addItem(item: Item): void {

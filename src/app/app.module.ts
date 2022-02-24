@@ -15,6 +15,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { ItemsPage } from './items/items.page';
 import { ListsPage } from './lists/lists.page';
@@ -61,6 +62,7 @@ import { ItemListComponent } from './_components/item-list/item-list.component';
         MatSortModule,
         MatCheckboxModule,
         MatRippleModule,
+        MatExpansionModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
