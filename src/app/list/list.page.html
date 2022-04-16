@@ -1,9 +1,23 @@
 <ng-container *ngIf="(list$ | async) as list">
-    <mat-toolbar color="primary"><span>{{ list.name }}</span></mat-toolbar>
-    <mat-accordion *ngIf="(listItems$ | async) as listItems" multi>
+    <mat-toolbar color="primary">
+        <span class="list-name">{{ list.name }}</span>
+        <span class="list-weight">&nbsp;({{ weight(list).toLocaleString() + 'g' }})</span>
+        <span class="toolbar-spacer"></span>
+        <button (click)="editList(list)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="deleteList($event, list)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+        </button>
+    </mat-toolbar>
+    <mat-accordion *ngIf="(listItems$ | async) as listItems" class="accordion-headers-align" multi>
         <mat-expansion-panel *ngFor="let section of listItems">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ section.category || 'Sonstiges' }}</mat-panel-title>
+                <mat-panel-description>
+                    <span class="category-weight-absolute">{{ section.weight.toLocaleString() + 'g' }}</span>
+                    <span class="category-weight-perc">{{ ' (' + section.weightPerc + '%)' }}</span>
+                </mat-panel-description>
             </mat-expansion-panel-header>
             <app-item-list (deleteItemClick)="removeItemFromList(list, $event)"
                            [items]="section.items"

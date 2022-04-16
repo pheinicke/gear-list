@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { map, mergeMap, Subscription, take } from 'rxjs';
 
 import { EditListDialogComponent } from '../_components/edit-list-dialog/edit-list-dialog.component';
 import { ConfirmDialogComponent } from '../_components/confirm-dialog/confirm-dialog.component';
 import { ItemsStore } from '../items/_services/items.store';
 import { totalWeight } from '../items/_types/item';
+import { AddListDialogComponent } from '../_components/add-list-dialog/add-list-dialog.component';
 
 import { ListsStore } from './_services/lists.store';
 import { List } from './_types/list';
@@ -15,8 +17,9 @@ import { List } from './_types/list';
     templateUrl: './lists.page.html',
     styleUrls: ['./lists.page.scss'],
 })
-export class ListsPage {
+export class ListsPage implements OnDestroy {
     columns = ['name', 'description', 'weight', 'actions'];
+    subscriptions: Array<Subscription> = [];
 
     constructor(
         public store: ListsStore,
@@ -26,11 +29,17 @@ export class ListsPage {
     ) {}
 
     addList(): void {
-        EditListDialogComponent.open(this.dialog)
-            .afterClosed()
-            .subscribe((list: List | null) => {
-                if (list) this.store.addList(list);
-            });
+        this.subscriptions.push(
+            this.store.state$
+                .pipe(
+                    map(({ lists }) => lists),
+                    take(1),
+                    mergeMap((lists) => AddListDialogComponent.open(this.dialog, lists).afterClosed())
+                )
+                .subscribe((list: List | null) => {
+                    if (list) this.store.addList(list);
+                })
+        );
     }
 
     editList(list: List): void {
@@ -62,5 +71,9 @@ export class ListsPage {
 
     toList(list: List): Promise<boolean> {
         return this.router.navigate(['/lists', list.id]);
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.forEach((sub) => sub.unsubscribe());
     }
 }

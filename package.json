@@ -42,7 +42,7 @@
     },
     "browserslist": [
         "defaults",
-        "not IE"
+        "not IE >= 0"
     ],
     "prettier": {
         "printWidth": 120,

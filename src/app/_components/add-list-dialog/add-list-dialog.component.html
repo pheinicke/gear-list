@@ -6,9 +6,19 @@
     <mat-label>Beschreibung</mat-label>
     <textarea #descField [value]="description" matInput placeholder="Beschreibung"></textarea>
 </mat-form-field>
+<mat-form-field appearance="standard">
+    <mat-label>Ausrüstung aus Liste übernehmen:</mat-label>
+    <mat-select
+        (selectionChange)="useItemsOfList($event)">
+        <mat-option>Keine</mat-option>
+        <mat-option *ngFor="let list of lists" [value]="list">
+            {{ list.name }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
 <button
     [disabled]="!nameField.value"
-    [mat-dialog-close]="submit(nameField.value, descField.value)"
+    [mat-dialog-close]="submit(nameField.value, descField.value, items)"
     color="primary"
     mat-raised-button>Speichern
 </button>

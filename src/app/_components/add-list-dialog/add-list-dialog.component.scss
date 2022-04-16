@@ -1,0 +1,8 @@
+:host {
+    display: block;
+    min-width: 400px;
+}
+
+:host ::ng-deep .mat-form-field {
+    display: block;
+}

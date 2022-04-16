@@ -16,6 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 
 import { ItemsPage } from './items/items.page';
 import { ListsPage } from './lists/lists.page';
@@ -29,6 +30,7 @@ import { EditListDialogComponent } from './_components/edit-list-dialog/edit-lis
 import { ListPage } from './list/list.page';
 import { SelectItemsDialogComponent } from './_components/select-items-dialog/select-items-dialog.component';
 import { ItemListComponent } from './_components/item-list/item-list.component';
+import { AddListDialogComponent } from './_components/add-list-dialog/add-list-dialog.component';
 
 @NgModule({
     declarations: [
@@ -43,6 +45,7 @@ import { ItemListComponent } from './_components/item-list/item-list.component';
         ConfirmDialogComponent,
         SelectItemsDialogComponent,
         ItemListComponent,
+        AddListDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -63,6 +66,7 @@ import { ItemListComponent } from './_components/item-list/item-list.component';
         MatCheckboxModule,
         MatRippleModule,
         MatExpansionModule,
+        MatSelectModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

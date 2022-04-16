@@ -2,6 +2,20 @@
     display: block;
 }
 
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.accordion-headers-align .mat-expansion-panel-header-title,
+.accordion-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.accordion-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
 .items {
     padding: 0 16px;
 }
