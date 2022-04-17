@@ -10,12 +10,13 @@ import { List } from '../_types/list';
 import { uuidv4 } from '../../_utils/uuidv4';
 import { Item } from '../../items/_types/item';
 import { mapNotNull } from '../../_utils/operators';
+import { ItemsStore } from '../../items/_services/items.store';
 
 import { ListsService } from './lists.service';
 
 @Injectable({ providedIn: 'root' })
 export class ListsStore extends Store<ListsStoreState> {
-    constructor(private listsService: ListsService) {
+    constructor(private listsService: ListsService, private itemsStore: ItemsStore) {
         super(new ListsStoreState());
 
         this.dispatch(new LoadLists());
@@ -113,7 +114,7 @@ export class ListsStore extends Store<ListsStoreState> {
             tap(() => {
                 const updatedList: List = {
                     ...action.list,
-                    items: [...action.list.items, ...action.items.map((item) => item.id)],
+                    items: [...action.list.items, ...action.items.map((item) => ({ ...item, count: 1 }))],
                 };
                 this.editList(updatedList);
             })
@@ -124,7 +125,7 @@ export class ListsStore extends Store<ListsStoreState> {
         return this.state$.pipe(
             take(1),
             tap(() => {
-                const updatedItems = action.list.items.filter((itemId) => itemId !== action.item.id);
+                const updatedItems = action.list.items.filter((item) => item.id !== action.item.id);
                 const updatedList = { ...action.list, items: updatedItems };
                 this.editList(updatedList);
             })

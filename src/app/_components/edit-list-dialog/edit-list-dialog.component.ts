@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { List } from '../../lists/_types/list';
+import { ItemAndCount } from '../../_types/item-and-count';
 
 @Component({
     selector: 'app-edit-list-dialog',
@@ -12,7 +13,7 @@ export class EditListDialogComponent {
     id: string;
     name: string;
     description: string;
-    items: Array<string>;
+    items: Array<ItemAndCount>;
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: List) {
         this.id = data?.id || '';

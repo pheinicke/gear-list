@@ -12,6 +12,8 @@ import { SelectItemsDialogComponent } from '../_components/select-items-dialog/s
 import { sortStringArray } from '../_utils/arrays';
 import { EditListDialogComponent } from '../_components/edit-list-dialog/edit-list-dialog.component';
 import { ConfirmDialogComponent } from '../_components/confirm-dialog/confirm-dialog.component';
+import { ItemAndCount } from '../_types/item-and-count';
+import { CategoryItems } from '../_types/category-items';
 
 @Component({
     selector: 'app-list',
@@ -21,7 +23,7 @@ import { ConfirmDialogComponent } from '../_components/confirm-dialog/confirm-di
 export class ListPage {
     listId$: Observable<string>;
     list$: Observable<List>;
-    listItems$: Observable<Array<{ category: string; items: Array<Item>; weight: number; weightPerc: number }>>;
+    listItems$: Observable<Array<CategoryItems>>;
     itemSuggestions$: Observable<Array<Item>>;
     columns = ['name', 'description', 'weight', 'actions'];
 
@@ -37,18 +39,11 @@ export class ListPage {
                 return store.list(id);
             })
         );
-        this.listItems$ = this.list$.pipe(
-            mergeMap((list) => {
-                return this.itemsStore.items$.pipe(
-                    map((items) => items.filter((item) => list.items.includes(item.id))),
-                    map((items) => this.groupByCategory(list, items))
-                );
-            })
-        );
+        this.listItems$ = this.list$.pipe(map((list) => this.groupByCategory(list.items)));
         this.itemSuggestions$ = this.list$.pipe(
             withLatestFrom(this.itemsStore.items$),
             map(([list, allItems]) => {
-                return allItems.filter((item) => !list.items.includes(item.id));
+                return allItems.filter((item) => !list.items.find((listItem) => item.id === listItem.id));
             })
         );
     }
@@ -89,21 +84,25 @@ export class ListPage {
     }
 
     weight(list: List): number {
-        const listItems = this.listItems(list);
-        return totalWeight(listItems);
+        return totalWeight(list.items);
     }
 
-    private listItems(list: List): Array<Item> {
-        return this.itemsStore.state.items.filter((item) => list.items.includes(item.id));
+    onItemCountChanged(list: List, updatedItem: ItemAndCount): void {
+        const updatedList = {
+            ...list,
+            items: list.items.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
+        };
+        this.store.editList(updatedList);
     }
 
-    private groupByCategory(
-        list: List,
-        items: Array<Item>
-    ): Array<{ category: string; items: Array<Item>; weight: number; weightPerc: number }> {
+    category(index: number, categoryItems: CategoryItems): string {
+        return categoryItems.category;
+    }
+
+    private groupByCategory(items: Array<ItemAndCount>): Array<CategoryItems> {
         const result = [];
         const categories = sortStringArray(ItemsStore.categories(items));
-        const listWeight = this.weight(list);
+        const listWeight = totalWeight(items);
         categories.forEach((category) => {
             const categoryItems = items.filter((item) => item.category === category);
             const weight = totalWeight(categoryItems);

@@ -1,0 +1,37 @@
+<mat-form-field appearance="standard" class="filter">
+    <mat-label>Filter</mat-label>
+    <input
+        #filter
+        (keyup)="applyFilter(filter.value)"
+        matInput
+        placeholder="Kategorie, Beschreibung oder Name des Items">
+</mat-form-field>
+<table [dataSource]="dataSource" class="items" mat-table>
+    <mat-text-column name="name"></mat-text-column>
+    <mat-text-column name="description"></mat-text-column>
+    <mat-text-column name="category"></mat-text-column>
+    <mat-text-column name="weight"></mat-text-column>
+    <ng-container matColumnDef="count">
+        <th *matHeaderCellDef mat-header-cell>Anzahl</th>
+        <td *matCellDef="let item" mat-cell>
+            <input #itemCount (change)="onItemCountChanged(item, itemCount.value)" [value]="item.count" type="number">
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell></th>
+        <td *matCellDef="let item" mat-cell>
+            <button (click)="onDeleteItemClick($event, item)" *ngIf="deleteItemClick.observed" mat-icon-button>
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="columns; sticky: true" mat-header-row></tr>
+    <tr *matRowDef="let item; columns: columns" mat-row></tr>
+    <tr *matNoDataRow class="mat-row">
+        <td
+            [attr.colspan]="columns.length"
+            class="mat-cell">No data matching the filter "{{filter.value}}"
+        </td>
+    </tr>
+</table>

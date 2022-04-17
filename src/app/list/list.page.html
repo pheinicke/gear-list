@@ -11,7 +11,7 @@
         </button>
     </mat-toolbar>
     <mat-accordion *ngIf="(listItems$ | async) as listItems" class="accordion-headers-align" multi>
-        <mat-expansion-panel *ngFor="let section of listItems">
+        <mat-expansion-panel *ngFor="let section of listItems; trackBy category">
             <mat-expansion-panel-header>
                 <mat-panel-title>{{ section.category || 'Sonstiges' }}</mat-panel-title>
                 <mat-panel-description>
@@ -19,9 +19,11 @@
                     <span class="category-weight-perc">{{ ' (' + section.weightPerc + '%)' }}</span>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-item-list (deleteItemClick)="removeItemFromList(list, $event)"
-                           [items]="section.items"
-                           class="items"></app-item-list>
+            <app-list-items
+                (deleteItemClick)="removeItemFromList(list, $event)"
+                (itemCountChange)="onItemCountChanged(list, $event)"
+                [items]="section.items"
+                class="items"></app-list-items>
         </mat-expansion-panel>
     </mat-accordion>
 

@@ -1,0 +1,51 @@
+:host {
+    display: block;
+}
+
+.items {
+    width: 100%;
+}
+
+.filter {
+    width: 100%;
+}
+
+:host ::ng-deep tr.mat-row:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+:host ::ng-deep .mat-column-name {
+    flex: 0 0 30%;
+    width: 30%;
+}
+
+:host ::ng-deep .mat-column-description {
+    flex: 0 0 30%;
+    width: 30%;
+}
+
+:host ::ng-deep .mat-column-category {
+    flex: 0 0 15%;
+    width: 15%;
+}
+
+:host ::ng-deep .mat-column-weight {
+    flex: 0 0 10%;
+    width: 10%;
+}
+
+:host ::ng-deep .mat-column-count {
+    flex: 0 0 5%;
+    width: 5%;
+
+    > input {
+        max-width: 40px;
+    }
+}
+
+:host ::ng-deep .mat-column-actions {
+    flex: 0 0 10%;
+    width: 10%;
+    text-align: right;
+}

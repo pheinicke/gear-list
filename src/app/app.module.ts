@@ -31,6 +31,7 @@ import { ListPage } from './list/list.page';
 import { SelectItemsDialogComponent } from './_components/select-items-dialog/select-items-dialog.component';
 import { ItemListComponent } from './_components/item-list/item-list.component';
 import { AddListDialogComponent } from './_components/add-list-dialog/add-list-dialog.component';
+import { ListItemsComponent } from './_components/list-items/list-items.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +47,7 @@ import { AddListDialogComponent } from './_components/add-list-dialog/add-list-d
         SelectItemsDialogComponent,
         ItemListComponent,
         AddListDialogComponent,
+        ListItemsComponent,
     ],
     imports: [
         BrowserModule,

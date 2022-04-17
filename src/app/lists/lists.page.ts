@@ -65,7 +65,7 @@ export class ListsPage implements OnDestroy {
     }
 
     weight(list: List): string {
-        const weight = totalWeight(this.itemsStore.state.items.filter((item) => list.items.includes(item.id)));
+        const weight = totalWeight(list.items);
         return weight.toLocaleString() + 'g';
     }
 
