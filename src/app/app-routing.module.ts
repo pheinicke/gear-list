@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ItemsPage } from './items/items.page';
 import { ListsPage } from './lists/lists.page';
-import { TemplatesPage } from './templates/templates.page';
 import { ListPage } from './list/list.page';
 
 const routes: Routes = [
@@ -11,7 +10,6 @@ const routes: Routes = [
     { path: 'items', component: ItemsPage },
     { path: 'lists', component: ListsPage },
     { path: 'lists/:id', component: ListPage },
-    { path: 'templates', component: TemplatesPage },
     { path: '**', redirectTo: '/items' },
 ];
 

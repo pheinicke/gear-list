@@ -20,7 +20,6 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ItemsPage } from './items/items.page';
 import { ListsPage } from './lists/lists.page';
-import { TemplatesPage } from './templates/templates.page';
 import { ContextComponent } from './_components/context/context.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -39,7 +38,6 @@ import { ListItemsComponent } from './_components/list-items/list-items.componen
         ContextComponent,
         ItemsPage,
         ListsPage,
-        TemplatesPage,
         ListPage,
         EditItemDialogComponent,
         EditListDialogComponent,
