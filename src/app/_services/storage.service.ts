@@ -21,10 +21,42 @@ export class StorageService {
 
     loadLists(): Array<List> {
         const storedLists = localStorage.getItem(LISTS_STORAGE_KEY);
-        return storedLists ? JSON.parse(storedLists) : [];
+        const lists = storedLists ? JSON.parse(storedLists) : [];
+        return lists.map((storedList: StoredList) => {
+            const listItemCounts = new Map<string, number>(Object.entries(storedList.items));
+            const allItems = this.loadItems();
+            const listItems = [...listItemCounts.entries()].map(([id, count]) => {
+                const actualItem = allItems.find((item) => item.id === id);
+                return actualItem ? { ...actualItem, count } : undefined;
+            });
+            return {
+                ...storedList,
+                items: listItems.filter((item) => !!item),
+            };
+        });
     }
 
     setLists(lists: Array<List>): void {
-        localStorage.setItem(LISTS_STORAGE_KEY, JSON.stringify(lists));
+        const storedLists = lists.map(toStoredList);
+        localStorage.setItem(LISTS_STORAGE_KEY, JSON.stringify(storedLists));
     }
+}
+
+function toStoredList(list: List): StoredList {
+    const convertedItems = new Map(
+        list.items.map((item) => {
+            return [item.id, item.count];
+        })
+    );
+    return {
+        ...list,
+        items: Object.fromEntries(convertedItems),
+    };
+}
+
+interface StoredList {
+    id: string;
+    name: string;
+    description: string;
+    items: Record<string, number>;
 }

@@ -10,6 +10,7 @@ import { Item } from '../_types/item';
 import { uuidv4 } from '../../_utils/uuidv4';
 import { distinctUntilStringArrayChanged, sortBy } from '../../_utils/operators';
 import { sortStringArray } from '../../_utils/arrays';
+import { ListsStore } from '../../lists/_services/lists.store';
 
 import { ItemsService } from './items.service';
 
@@ -18,7 +19,7 @@ export class ItemsStore extends Store<ItemsStoreState> {
     items$: Observable<Array<Item>>;
     categories$: Observable<Array<string>>;
 
-    constructor(private itemsService: ItemsService) {
+    constructor(private itemsService: ItemsService, private listsStore: ListsStore) {
         super(new ItemsStoreState());
 
         this.items$ = this.state$.pipe(
@@ -105,6 +106,7 @@ export class ItemsStore extends Store<ItemsStoreState> {
             ),
             tap((items) => {
                 this.itemsService.updateItems(items);
+                this.listsStore.reloadLists();
             }),
             map((items) => ({ items }))
         );

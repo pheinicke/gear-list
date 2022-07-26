@@ -10,15 +10,18 @@ import { List } from '../_types/list';
 import { uuidv4 } from '../../_utils/uuidv4';
 import { Item } from '../../items/_types/item';
 import { mapNotNull } from '../../_utils/operators';
-import { ItemsStore } from '../../items/_services/items.store';
 
 import { ListsService } from './lists.service';
 
 @Injectable({ providedIn: 'root' })
 export class ListsStore extends Store<ListsStoreState> {
-    constructor(private listsService: ListsService, private itemsStore: ItemsStore) {
+    constructor(private listsService: ListsService) {
         super(new ListsStoreState());
 
+        this.dispatch(new LoadLists());
+    }
+
+    reloadLists(): void {
         this.dispatch(new LoadLists());
     }
 
